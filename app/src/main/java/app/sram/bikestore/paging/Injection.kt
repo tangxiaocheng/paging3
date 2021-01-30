@@ -2,7 +2,6 @@ package app.sram.bikestore.paging
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
-import com.adrena.commerce.paging3.R
 import java.util.*
 
 object Injection {
@@ -13,9 +12,8 @@ object Injection {
     fun provideRxRemoteViewModel(context: Context): ViewModelProvider.Factory {
         val remoteMediator =
             GetMoviesRxRemoteMediator(
-                service = TMDBService.create(),
+                service = RestApi.create(),
                 database = provideDatabase(context),
-                apiKey = context.getString(R.string.api_key),
                 mapper = MoviesMapper(),
                 locale = provideLocale()
             )

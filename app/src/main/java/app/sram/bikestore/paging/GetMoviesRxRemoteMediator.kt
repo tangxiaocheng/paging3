@@ -11,9 +11,8 @@ import java.util.*
 
 @OptIn(ExperimentalPagingApi::class)
 class GetMoviesRxRemoteMediator(
-    private val service: TMDBService,
+    private val service: RestApi,
     private val database: MovieDatabase,
-    private val apiKey: String,
     private val mapper: MoviesMapper,
     private val locale: Locale
 ) : RxRemoteMediator<Int, Movies.Movie>() {
@@ -50,9 +49,9 @@ class GetMoviesRxRemoteMediator(
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
                     service.popularMovieRx(
-                        apiKey = apiKey,
                         page = page,
-                        language = locale.language)
+                        language = locale.language
+                    )
                         .map { mapper.transform(it, locale) }
                         .map { insertToDb(page, loadType, it) }
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }

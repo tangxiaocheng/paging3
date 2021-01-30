@@ -9,11 +9,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface TMDBService {
+interface RestApi {
 
     @GET("movie/popular")
     fun popularMovieRx(
-        @Query("api_key") apiKey: String,
         @Query("page") page: Int,
         @Query("language") language: String
     ) : Single<MoviesResponse>
@@ -21,7 +20,7 @@ interface TMDBService {
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"
 
-        fun create(): TMDBService {
+        fun create(): RestApi {
             val logger = HttpLoggingInterceptor()
             logger.level = HttpLoggingInterceptor.Level.BASIC
 
@@ -35,7 +34,7 @@ interface TMDBService {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-                .create(TMDBService::class.java)
+                .create(RestApi::class.java)
         }
     }
 }
