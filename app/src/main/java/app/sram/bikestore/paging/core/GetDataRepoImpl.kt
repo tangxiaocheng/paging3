@@ -12,18 +12,13 @@ import javax.inject.Inject
 
 class GetDataRepoImpl @Inject constructor(
     private val moviesRxDao: BikeStoresDao,
-    private val remoteMediator: RxRemoteMediator
+    private val remoteMediator: RxRemoteMediator,
+    private val config: PagingConfig
 ) : GetDataRepo {
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getPagingDataList(): Flowable<PagingData<Movies.Movie>> {
-        val config = PagingConfig(
-            pageSize = 20,
-            enablePlaceholders = true,
-            maxSize = 30,
-            prefetchDistance = 5,
-            initialLoadSize = 40
-        )
+
         return Pager(
             config = config,
             remoteMediator = remoteMediator,

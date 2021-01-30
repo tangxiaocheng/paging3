@@ -2,6 +2,7 @@ package app.sram.bikestore.paging.di
 
 import android.app.Application
 import android.content.Context
+import androidx.paging.PagingConfig
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
@@ -25,5 +26,16 @@ class AppConfigModule {
     @Provides
     fun provideContext(app: Application): Context {
         return app.applicationContext
+    }
+
+    @Provides
+    fun providePagingConfig(): PagingConfig {
+        return PagingConfig(
+            pageSize = 20,
+            enablePlaceholders = true,
+            maxSize = 30,
+            prefetchDistance = 5,
+            initialLoadSize = 40
+        )
     }
 }
