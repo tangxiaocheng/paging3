@@ -12,7 +12,7 @@ interface BikeStoresDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movieEntities: List<MoviesDb.MovieEntity>)
 
-    @Query("SELECT * FROM movieEntities ORDER BY id ASC")
+    @Query("SELECT * FROM movieEntities")
     fun selectAll(): PagingSource<Int, MoviesDb.MovieEntity>
 
     @Query("DELETE FROM movieEntities")

@@ -1,5 +1,6 @@
 package app.sram.bikestore.paging.data
 
+import android.util.Log
 import app.sram.bikestore.paging.dao.MoviesDb
 import app.sram.bikestore.paging.di.AppScope
 import javax.inject.Inject
@@ -9,18 +10,18 @@ class MoviesMapper @Inject constructor() {
 
     fun transform(response: MoviesResponse): MoviesDb {
         return with(response) {
+            Log.d("transform", "transform: $response")
             MoviesDb(
-                total = totalPages,
-                page = page,
+                pageToken = nextPageToken,
                 movieEntities = results.map {
                     MoviesDb.MovieEntity(
-                        0,
                         it.placeId,
                         it.rating,
                         it.photos.first().let { photo -> Image(photo.photoReference) },
-                        it.title
+                        it.businessStatus
                     )
-                }
+                },
+                status = status
             )
         }
     }

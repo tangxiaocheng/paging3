@@ -1,5 +1,6 @@
 package app.sram.bikestore.paging.core
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -27,51 +28,67 @@ class AppRxRemoteMediator @Inject constructor(
     override fun loadSingle(loadType: LoadType, state: PagingState<Int, MoviesDb.MovieEntity>): Single<MediatorResult> {
         return Single.just(loadType)
             .subscribeOn(Schedulers.io())
-            .map {
-                when (it) {
+            .map { loadTypeHere: LoadType ->
+                when (loadTypeHere) {
                     LoadType.REFRESH -> {
                         val remoteKeys: MoviesDb.MovieRemoteKeys? = getRemoteKeyClosestToCurrentPosition(state)
-                        remoteKeys?.nextKey?.minus(1) ?: 1
+                        ""
                     }
                     LoadType.PREPEND -> {
                         val remoteKeys = getRemoteKeyForFirstItem(state)
                             ?: throw InvalidObjectException("Result is empty")
 
-                        remoteKeys.prevKey ?: INVALID_PAGE
+                        remoteKeys.prevPageToken ?: INVALID_PAGE
                     }
                     LoadType.APPEND -> {
                         val remoteKeys = getRemoteKeyForLastItem(state)
                             ?: throw InvalidObjectException("Result is empty")
 
-                        remoteKeys.nextKey ?: INVALID_PAGE
+                        remoteKeys.nextPageToken ?: INVALID_PAGE
                     }
                 }
             }
-            .flatMap { page: Int ->
+            .flatMap { page: String ->
                 if (page == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
-//                    restApi.popularMovieRx(pageToken = page)
-                    restApi.popularMovieRx(pageToken = "")
-                        .map { response: MoviesResponse -> mapper.transform(response) }
-                        .map { insertToDb(page, loadType, it) }
-                        .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }
-                        .onErrorReturn { MediatorResult.Error(it) }
+                    dealSingle(page, loadType)
                 }
             }
-            .onErrorReturn { MediatorResult.Error(it) }
+            .onErrorReturn { throwable: Throwable ->
+                throwable.printStackTrace()
+                Log.d("Randy", "loadSingle:${throwable.printStackTrace()}")
+                MediatorResult.Error(throwable)
+            }
     }
 
-    private fun insertToDb(page: Int, loadType: LoadType, data: MoviesDb): MoviesDb {
+    private fun dealSingle(
+        pageTokenString: String?,
+        loadType: LoadType
+    ): Single<MediatorResult> {
+        return restApi.popularMovieRx(pageToken = pageTokenString ?: "")
+            .map { response: MoviesResponse -> map2moviesDb(response) }
+            .map { moviesDb: MoviesDb -> insertToDb(loadType, moviesDb, pageTokenString) }
+            .map<MediatorResult> { moviesDb: MoviesDb -> MediatorResult.Success(endOfPaginationReached = moviesDb.endOfPage) }
+            .onErrorReturn { throwable: Throwable ->
+                throwable.printStackTrace()
+                Log.d("Randy", "popularMovieRx:${throwable.printStackTrace()}")
+                MediatorResult.Error(throwable)
+            }
+    }
+
+    private fun map2moviesDb(response: MoviesResponse): MoviesDb {
+        return mapper.transform(response)
+    }
+
+    private fun insertToDb(loadType: LoadType, data: MoviesDb, prevPageTokenString: String?): MoviesDb {
         database.runInTransaction {
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.clearRemoteKeys()
                 bikeStoresDao.clearAll()
             }
-            val prevKey = if (page == 1) null else page - 1
-            val nextKey = if (data.endOfPage) null else page + 1
-            val keys = data.movieEntities.map {
-                MoviesDb.MovieRemoteKeys(placeId = it.placeId, prevKey = prevKey, nextKey = nextKey)
+            val keys: List<MoviesDb.MovieRemoteKeys> = data.movieEntities.map {
+                MoviesDb.MovieRemoteKeys(placeId = it.placeId, prevPageToken = prevPageTokenString, nextPageToken = data.pageToken)
             }
             remoteKeysDao.insertAll(keys)
             bikeStoresDao.insertAll(data.movieEntities)
@@ -101,6 +118,6 @@ class AppRxRemoteMediator @Inject constructor(
     }
 
     companion object {
-        const val INVALID_PAGE = -1
+        const val INVALID_PAGE = "-1"
     }
 }

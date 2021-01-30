@@ -9,18 +9,18 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MoviesDb(
-    val total: Int = 0,
-    val page: Int = 0,
-    val movieEntities: List<MovieEntity>
+    val pageToken: String?,
+    val movieEntities: List<MovieEntity>,
+    val status: String?
 ) : Parcelable {
 
     @IgnoredOnParcel
-    val endOfPage = total == page
+    val endOfPage = status == "ZERO_RESULTS"
 
     @Parcelize
     @Entity(tableName = "movieEntities")
     data class MovieEntity(
-        @PrimaryKey(autoGenerate = true) val id: Long = 0,
+        @PrimaryKey(autoGenerate = false)
         val placeId: String,
         val popularity: Double,
         val poster: Image?,
@@ -31,7 +31,7 @@ data class MoviesDb(
     @Entity(tableName = "remote_keys")
     data class MovieRemoteKeys(
         @PrimaryKey val placeId: String,
-        val prevKey: Int?,
-        val nextKey: Int?
+        val prevPageToken: String?,
+        val nextPageToken: String?
     ) : Parcelable
 }

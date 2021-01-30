@@ -4,8 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 data class MoviesResponse(
-    val totalPages: Int = 100,
-    val page: Int = 0,
+    val nextPageToken: String?,
     val results: List<MovieModel>,
     val status: String,
     val errorMessage: String?
@@ -16,7 +15,7 @@ data class MoviesResponse(
         val userRatingsTotal: Int,
         val placeId: String,
         val vicinity: String,
-        val title: String,
+        val businessStatus: String,
         val photos: List<Photo>
     )
 }
