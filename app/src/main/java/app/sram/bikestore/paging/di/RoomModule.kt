@@ -3,7 +3,7 @@ package app.sram.bikestore.paging.di
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
-import app.sram.bikestore.paging.core.GetDataRepoImpl
+import app.sram.bikestore.paging.core.GetDataRepo
 import app.sram.bikestore.paging.core.GetMoviesRxViewModelFactory
 import app.sram.bikestore.paging.dao.AppDatabase
 import app.sram.bikestore.paging.dao.BikeStoresDao
@@ -40,7 +40,7 @@ class RoomModule {
 
     @AppScope
     @Provides
-    fun provideRxRemoteViewModel(repository: GetDataRepoImpl): ViewModelProvider.Factory {
+    fun provideRxRemoteViewModel(repository: GetDataRepo): ViewModelProvider.Factory {
 
         return GetMoviesRxViewModelFactory(repository)
     }

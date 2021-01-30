@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 @Singleton
 @AppScope
-@Component(modules = [RoomModule::class, AppConfigModule::class, ApiModule::class])
+@Component(modules = [RoomModule::class, AppConfigModule::class, ApiModule::class, ImpModule::class])
 interface AppComponent {
     fun inject(activity: PagingActivity)
     fun inject(movieRxRemoteFragment: MovieRxRemoteFragment)
