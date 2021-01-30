@@ -13,7 +13,7 @@ import androidx.room.TypeConverters
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
-    abstract fun moviesRxDao(): MovieRxDao
+    abstract fun moviesRxDao(): BikeStoresDao
     abstract fun movieRemoteKeysRxDao(): MovieRemoteKeysRxDao
 
     companion object {

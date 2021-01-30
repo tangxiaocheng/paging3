@@ -69,7 +69,7 @@ class GetMoviesRxRemoteMediator(
         try {
             if (loadType == LoadType.REFRESH) {
                 database.movieRemoteKeysRxDao().clearRemoteKeys()
-                database.moviesRxDao().clearMovies()
+                database.moviesRxDao().clearAll()
             }
 
             val prevKey = if (page == 1) null else page - 1

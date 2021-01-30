@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface MovieRxDao {
+interface BikeStoresDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(movies: List<Movies.Movie>)
@@ -16,6 +16,6 @@ interface MovieRxDao {
     fun selectAll(): PagingSource<Int, Movies.Movie>
 
     @Query("DELETE FROM movies")
-    fun clearMovies()
+    fun clearAll()
 
 }
