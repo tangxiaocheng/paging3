@@ -9,9 +9,7 @@ class MoviesRxAdapter : PagingDataAdapter<Movies.Movie, MovieGridViewHolder>(
 ) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGridViewHolder {
-        return MovieGridViewHolder.create(
-            parent
-        )
+        return MovieGridViewHolder.create(parent)
     }
 
     override fun onBindViewHolder(holder: MovieGridViewHolder, position: Int) {

@@ -1,6 +1,7 @@
 package app.sram.bikestore.paging
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,63 +15,66 @@ import com.adrena.commerce.paging3.databinding.FragmentMovieListBinding
 import io.reactivex.disposables.CompositeDisposable
 
 class MovieRxRemoteFragment : Fragment() {
-    private val mDisposable = CompositeDisposable()
-
-    private lateinit var mBinding: FragmentMovieListBinding
-    private lateinit var mViewModel: GetMoviesRxViewModel
-    private lateinit var mAdapter: MoviesRxAdapter
+    private val disposable = CompositeDisposable()
+    private lateinit var binding: FragmentMovieListBinding
+    private lateinit var rvAdapter: MoviesRxAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        mBinding = FragmentMovieListBinding.inflate(inflater, container, false)
+        binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
-        val view = mBinding.root
+        val view = binding.root
 
-        activity?.title = getString(R.string.rx_with_remote_mediator)
+        val viewModel =
+            ViewModelProvider(this, Injection.provideRxRemoteViewModel(view.context)).get(
+                GetMoviesRxViewModel::class.java
+            )
 
-        mViewModel = ViewModelProvider(this, Injection.provideRxRemoteViewModel(view.context)).get(
-            GetMoviesRxViewModel::class.java)
+        rvAdapter = MoviesRxAdapter()
 
-        mAdapter = MoviesRxAdapter()
-
-        mBinding.list.layoutManager = GridLayoutManager(view.context, 2)
-        mBinding.list.adapter = mAdapter
-        mBinding.list.adapter = mAdapter.withLoadStateFooter(
+        binding.list.layoutManager = GridLayoutManager(view.context, 2)
+        binding.list.adapter = rvAdapter
+        binding.list.adapter = rvAdapter.withLoadStateFooter(
             footer = LoadingGridStateAdapter()
         )
-        mAdapter.addLoadStateListener { loadState ->
+        rvAdapter.addLoadStateListener { loadState ->
             val errorState = loadState.source.append as? LoadState.Error
                 ?: loadState.source.prepend as? LoadState.Error
                 ?: loadState.append as? LoadState.Error
                 ?: loadState.prepend as? LoadState.Error
 
             errorState?.let {
-                AlertDialog.Builder(view.context)
-                    .setTitle(R.string.error)
-                    .setMessage(it.error.localizedMessage)
-                    .setNegativeButton(R.string.cancel) { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .setPositiveButton(R.string.retry) { _, _ ->
-                        mAdapter.retry()
-                    }
-                    .show()
+                val context = view.context
+                val localizedMessage = it.error.localizedMessage
+                showErrorDialog(context, localizedMessage ?: "empty error message")
             }
         }
 
-        mDisposable.add(mViewModel.getFavoriteMovies().subscribe {
-            mAdapter.submitData(lifecycle, it)
+        disposable.add(viewModel.getFavoriteMovies().subscribe {
+            rvAdapter.submitData(lifecycle, it)
         })
 
         return view
     }
 
-    override fun onDestroyView() {
-        mDisposable.dispose()
+    private fun showErrorDialog(context: Context, localizedMessage: String) {
+        AlertDialog.Builder(context)
+            .setTitle(R.string.error)
+            .setMessage(localizedMessage)
+            .setNegativeButton(R.string.cancel) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setPositiveButton(R.string.retry) { _, _ ->
+                rvAdapter.retry()
+            }
+            .show()
+    }
 
+    override fun onDestroyView() {
+        disposable.dispose()
         super.onDestroyView()
     }
 }
