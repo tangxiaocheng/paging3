@@ -3,7 +3,7 @@ package app.sram.bikestore.paging.data
 import com.google.gson.annotations.SerializedName
 
 data class MoviesResponse(
-    @SerializedName("total_pages") val total: Int = 0,
+    @SerializedName("total_pages") val totalPages: Int = 0,
     val page: Int = 0,
     val results: List<MovieModel>
 ) {

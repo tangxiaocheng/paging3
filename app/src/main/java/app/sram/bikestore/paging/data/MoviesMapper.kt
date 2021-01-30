@@ -10,7 +10,7 @@ class MoviesMapper @Inject constructor() {
     fun transform(response: MoviesResponse): MoviesDb {
         return with(response) {
             MoviesDb(
-                total = total,
+                total = totalPages,
                 page = page,
                 movieEntities = results.map {
                     MoviesDb.MovieEntity(
