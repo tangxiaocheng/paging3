@@ -6,6 +6,7 @@ import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
 import app.sram.bikestore.paging.api.RestApi
 import app.sram.bikestore.paging.dao.AppDatabase
+import app.sram.bikestore.paging.dao.BikeStoresDao
 import app.sram.bikestore.paging.dao.Movies
 import app.sram.bikestore.paging.dao.RemoteKeysDao
 import app.sram.bikestore.paging.data.MoviesMapper
@@ -19,7 +20,8 @@ class RxRemoteMediator @Inject constructor(
     private val service: RestApi,
     private val database: AppDatabase,
     private val mapper: MoviesMapper,
-    private val remoteKeysDao: RemoteKeysDao
+    private val remoteKeysDao: RemoteKeysDao,
+    private val bikeStoresDao: BikeStoresDao
 ) : RxRemoteMediator<Int, Movies.Movie>() {
     override fun loadSingle(
         loadType: LoadType,
@@ -67,7 +69,7 @@ class RxRemoteMediator @Inject constructor(
         try {
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.clearRemoteKeys()
-                database.moviesRxDao().clearAll()
+                bikeStoresDao.clearAll()
             }
 
             val prevKey = if (page == 1) null else page - 1
@@ -76,7 +78,7 @@ class RxRemoteMediator @Inject constructor(
                 Movies.MovieRemoteKeys(movieId = it.movieId, prevKey = prevKey, nextKey = nextKey)
             }
             remoteKeysDao.insertAll(keys)
-            database.moviesRxDao().insertAll(data.movies)
+            bikeStoresDao.insertAll(data.movies)
             database.setTransactionSuccessful()
         } finally {
             database.endTransaction()
