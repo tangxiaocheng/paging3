@@ -17,16 +17,13 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class RxRemoteMediator @Inject constructor(
-    private val service: RestApi,
+    private val restApi: RestApi,
     private val database: AppDatabase,
     private val mapper: MoviesMapper,
     private val remoteKeysDao: RemoteKeysDao,
     private val bikeStoresDao: BikeStoresDao
 ) : RxRemoteMediator<Int, Movies.Movie>() {
-    override fun loadSingle(
-        loadType: LoadType,
-        state: PagingState<Int, Movies.Movie>
-    ): Single<MediatorResult> {
+    override fun loadSingle(loadType: LoadType, state: PagingState<Int, Movies.Movie>): Single<MediatorResult> {
         return Single.just(loadType)
             .subscribeOn(Schedulers.io())
             .map {
@@ -53,7 +50,7 @@ class RxRemoteMediator @Inject constructor(
                 if (page == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
-                    service.popularMovieRx(page = page)
+                    restApi.popularMovieRx(page = page)
                         .map { mapper.transform(it) }
                         .map { insertToDb(page, loadType, it) }
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }

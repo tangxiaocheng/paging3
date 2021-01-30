@@ -14,7 +14,6 @@ class GetDataRepoImpl @Inject constructor(
 
     @OptIn(ExperimentalPagingApi::class)
     override fun getPagingDataList(): Flowable<PagingData<Movies.Movie>> {
-
         return pager.flowable
     }
 }
