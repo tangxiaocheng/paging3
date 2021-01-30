@@ -2,7 +2,7 @@ package app.sram.bikestore.paging.dao
 
 import okhttp3.Interceptor
 import okhttp3.Response
-import java.util.*
+import java.util.Locale
 
 class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

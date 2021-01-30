@@ -10,7 +10,7 @@ import com.adrena.commerce.paging3.databinding.LoadingGridItemBinding
 
 class LoadingGridStateViewHolder(
     private val binding: LoadingGridItemBinding
-): RecyclerView.ViewHolder(binding.root) {
+) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(loadState: LoadState) {
         binding.progressBar.isVisible = loadState is LoadState.Loading

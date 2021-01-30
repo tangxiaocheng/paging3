@@ -55,9 +55,11 @@ class MovieRxRemoteFragment : Fragment() {
             }
         }
 
-        disposable.add(viewModel.getFavoriteMovies().subscribe {
-            rvAdapter.submitData(lifecycle, it)
-        })
+        disposable.add(
+            viewModel.getFavoriteMovies().subscribe {
+                rvAdapter.submitData(lifecycle, it)
+            }
+        )
 
         return view
     }

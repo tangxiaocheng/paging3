@@ -16,5 +16,4 @@ interface RemoteKeysDao {
 
     @Query("DELETE FROM movie_remote_keys")
     fun clearRemoteKeys()
-
 }

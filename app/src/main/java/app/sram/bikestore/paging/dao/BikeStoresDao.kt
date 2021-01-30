@@ -17,5 +17,4 @@ interface BikeStoresDao {
 
     @Query("DELETE FROM movies")
     fun clearAll()
-
 }
