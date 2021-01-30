@@ -50,7 +50,7 @@ class AppRxRemoteMediator @Inject constructor(
                 if (page == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
-                    restApi.popularMovieRx(page = page)
+                    restApi.popularMovieRx(pageToken = page)
                         .map { mapper.transform(it) }
                         .map { insertToDb(page, loadType, it) }
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }

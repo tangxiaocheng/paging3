@@ -21,7 +21,7 @@ interface RestApi {
 //    &pagetoken=fgdsfgdsrr
     @GET("maps/api/place/nearbysearch/json")
     fun popularMovieRx(
-        @Query("page") page: Int,
+        @Query("pagetoken") pageToken: Int,
         @Query("location") location: String = "47.584420801582866,-122.15182334946458",
         @Query("radius") radius: String = "50000",
         @Query("type") type: String = "bicycle_store"
