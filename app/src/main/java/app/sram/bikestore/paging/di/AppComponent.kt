@@ -3,10 +3,14 @@ package app.sram.bikestore.paging.di
 import app.sram.bikestore.paging.PagingActivity
 import dagger.BindsInstance
 import dagger.Component
+import javax.inject.Singleton
 
+@Singleton
+@AppScope
 @Component
 interface AppComponent {
     fun inject(activity: PagingActivity)
+
     @Component.Builder
     interface Builder {
         @BindsInstance
