@@ -9,6 +9,7 @@ data class MoviesResponse(
 ) {
 
     data class MovieModel(
+        @SerializedName("rating")
         val popularity: Double,
         @SerializedName("vote_count") val voteCount: Int,
         val video: Boolean,
