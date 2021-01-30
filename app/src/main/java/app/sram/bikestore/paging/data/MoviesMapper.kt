@@ -15,10 +15,9 @@ class MoviesMapper @Inject constructor() {
                 movieEntities = results.map {
                     MoviesDb.MovieEntity(
                         0,
-                        it.id,
-                        it.popularity,
-                        it.posterPath?.let { path -> Image(path) },
-                        it.backdropPath?.let { path -> Image(path) },
+                        it.placeId,
+                        it.rating,
+                        it.photos.first().let { photo -> Image(photo.photoReference) },
                         it.title
                     )
                 }

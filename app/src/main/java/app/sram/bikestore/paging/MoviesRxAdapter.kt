@@ -22,7 +22,7 @@ class MoviesRxAdapter : PagingDataAdapter<MoviesDb.MovieEntity, MovieGridViewHol
     companion object {
         private val COMPARATOR = object : DiffUtil.ItemCallback<MoviesDb.MovieEntity>() {
             override fun areItemsTheSame(oldItem: MoviesDb.MovieEntity, newItem: MoviesDb.MovieEntity): Boolean {
-                return oldItem.movieId == newItem.movieId
+                return oldItem.placeId == newItem.placeId
             }
 
             override fun areContentsTheSame(oldItem: MoviesDb.MovieEntity, newItem: MoviesDb.MovieEntity): Boolean {

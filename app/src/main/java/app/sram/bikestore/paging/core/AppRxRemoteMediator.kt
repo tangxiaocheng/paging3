@@ -10,6 +10,7 @@ import app.sram.bikestore.paging.dao.BikeStoresDao
 import app.sram.bikestore.paging.dao.MoviesDb
 import app.sram.bikestore.paging.dao.RemoteKeysDao
 import app.sram.bikestore.paging.data.MoviesMapper
+import app.sram.bikestore.paging.data.MoviesResponse
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
@@ -46,12 +47,13 @@ class AppRxRemoteMediator @Inject constructor(
                     }
                 }
             }
-            .flatMap { page ->
+            .flatMap { page: Int ->
                 if (page == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
-                    restApi.popularMovieRx(pageToken = page)
-                        .map { mapper.transform(it) }
+//                    restApi.popularMovieRx(pageToken = page)
+                    restApi.popularMovieRx(pageToken = "")
+                        .map { response: MoviesResponse -> mapper.transform(response) }
                         .map { insertToDb(page, loadType, it) }
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }
                         .onErrorReturn { MediatorResult.Error(it) }
@@ -69,7 +71,7 @@ class AppRxRemoteMediator @Inject constructor(
             val prevKey = if (page == 1) null else page - 1
             val nextKey = if (data.endOfPage) null else page + 1
             val keys = data.movieEntities.map {
-                MoviesDb.MovieRemoteKeys(movieId = it.movieId, prevKey = prevKey, nextKey = nextKey)
+                MoviesDb.MovieRemoteKeys(placeId = it.placeId, prevKey = prevKey, nextKey = nextKey)
             }
             remoteKeysDao.insertAll(keys)
             bikeStoresDao.insertAll(data.movieEntities)
@@ -80,19 +82,19 @@ class AppRxRemoteMediator @Inject constructor(
 
     private fun getRemoteKeyForLastItem(state: PagingState<Int, MoviesDb.MovieEntity>): MoviesDb.MovieRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
-            remoteKeysDao.remoteKeysByMovieId(repo.movieId)
+            remoteKeysDao.remoteKeysByMovieId(repo.placeId)
         }
     }
 
     private fun getRemoteKeyForFirstItem(state: PagingState<Int, MoviesDb.MovieEntity>): MoviesDb.MovieRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { movie ->
-            remoteKeysDao.remoteKeysByMovieId(movie.movieId)
+            remoteKeysDao.remoteKeysByMovieId(movie.placeId)
         }
     }
 
     private fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, MoviesDb.MovieEntity>): MoviesDb.MovieRemoteKeys? {
         return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.movieId?.let { id ->
+            state.closestItemToPosition(position)?.placeId?.let { id ->
                 remoteKeysDao.remoteKeysByMovieId(id)
             }
         }

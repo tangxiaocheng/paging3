@@ -21,17 +21,16 @@ data class MoviesDb(
     @Entity(tableName = "movieEntities")
     data class MovieEntity(
         @PrimaryKey(autoGenerate = true) val id: Long = 0,
-        val movieId: Long,
+        val placeId: String,
         val popularity: Double,
         val poster: Image?,
-        val backdrop: Image?,
         val title: String
     ) : Parcelable
 
     @Parcelize
-    @Entity(tableName = "movie_remote_keys")
+    @Entity(tableName = "remote_keys")
     data class MovieRemoteKeys(
-        @PrimaryKey val movieId: Long,
+        @PrimaryKey val placeId: String,
         val prevKey: Int?,
         val nextKey: Int?
     ) : Parcelable
