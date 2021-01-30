@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 import app.sram.bikestore.paging.data.Image
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
-import java.util.*
 
 @Parcelize
 data class MoviesDb(
@@ -24,16 +23,9 @@ data class MoviesDb(
         @PrimaryKey(autoGenerate = true) val id: Long = 0,
         val movieId: Long,
         val popularity: Double,
-        val video: Boolean,
         val poster: Image?,
-        val adult: Boolean,
         val backdrop: Image?,
-        val originalLanguage: String,
-        val originalTitle: String,
-        val title: String,
-        val voteAverage: Double,
-        val overview: String,
-        val releaseDate: Date?
+        val title: String
     ) : Parcelable
 
     @Parcelize
