@@ -12,7 +12,7 @@ import java.util.*
 @OptIn(ExperimentalPagingApi::class)
 class GetMoviesRxRemoteMediator(
     private val service: RestApi,
-    private val database: MovieDatabase,
+    private val database: AppDatabase,
     private val mapper: MoviesMapper,
     private val locale: Locale
 ) : RxRemoteMediator<Int, Movies.Movie>() {

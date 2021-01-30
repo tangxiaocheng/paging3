@@ -12,15 +12,15 @@ import androidx.room.TypeConverters
     exportSchema = false
 )
 @TypeConverters(Converters::class)
-abstract class MovieDatabase: RoomDatabase() {
+abstract class AppDatabase: RoomDatabase() {
     abstract fun moviesRxDao(): MovieRxDao
     abstract fun movieRemoteKeysRxDao(): MovieRemoteKeysRxDao
 
     companion object {
         @Volatile
-        private var INSTANCE: MovieDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context): MovieDatabase =
+        fun getInstance(context: Context): AppDatabase =
             INSTANCE
                 ?: synchronized(this) {
                     INSTANCE
@@ -33,7 +33,7 @@ abstract class MovieDatabase: RoomDatabase() {
 
         private fun buildDatabase(context: Context) =
             Room.databaseBuilder(context.applicationContext,
-                MovieDatabase::class.java, "TMDB.db")
+                AppDatabase::class.java, "TMDB.db")
                 .build()
     }
 }

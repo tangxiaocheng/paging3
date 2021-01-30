@@ -6,7 +6,7 @@ import java.util.*
 
 object Injection {
     private fun provideLocale(): Locale = Locale.getDefault()
-    private fun provideDatabase(context: Context): MovieDatabase = MovieDatabase.getInstance(context)
+    private fun provideDatabase(context: Context): AppDatabase = AppDatabase.getInstance(context)
 
 
     fun provideRxRemoteViewModel(context: Context): ViewModelProvider.Factory {

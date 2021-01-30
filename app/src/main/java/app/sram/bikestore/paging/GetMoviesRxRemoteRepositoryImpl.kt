@@ -8,7 +8,7 @@ import androidx.paging.rxjava2.flowable
 import io.reactivex.Flowable
 
 class GetMoviesRxRemoteRepositoryImpl(
-    private val database: MovieDatabase,
+    private val database: AppDatabase,
     private val remoteMediator: GetMoviesRxRemoteMediator
 ): GetMoviesRxRepository {
 
