@@ -61,14 +61,11 @@ class RxRemoteMediator @Inject constructor(
     }
 
     private fun insertToDb(page: Int, loadType: LoadType, data: Movies): Movies {
-        database.beginTransaction()
-
-        try {
+        database.runInTransaction {
             if (loadType == LoadType.REFRESH) {
                 remoteKeysDao.clearRemoteKeys()
                 bikeStoresDao.clearAll()
             }
-
             val prevKey = if (page == 1) null else page - 1
             val nextKey = if (data.endOfPage) null else page + 1
             val keys = data.movies.map {
@@ -76,9 +73,6 @@ class RxRemoteMediator @Inject constructor(
             }
             remoteKeysDao.insertAll(keys)
             bikeStoresDao.insertAll(data.movies)
-            database.setTransactionSuccessful()
-        } finally {
-            database.endTransaction()
         }
 
         return data
