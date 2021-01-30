@@ -5,6 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import app.sram.bikestore.paging.dao.BikeStoresDao
+import app.sram.bikestore.paging.dao.RemoteKeysDao
 
 @Database(
     entities = [Movies.Movie::class, Movies.MovieRemoteKeys::class],
@@ -14,7 +16,7 @@ import androidx.room.TypeConverters
 @TypeConverters(Converters::class)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun moviesRxDao(): BikeStoresDao
-    abstract fun movieRemoteKeysRxDao(): MovieRemoteKeysRxDao
+    abstract fun movieRemoteKeysRxDao(): RemoteKeysDao
 
     companion object {
         @Volatile

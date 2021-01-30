@@ -1,5 +1,6 @@
 package app.sram.bikestore.paging
 
+import app.sram.bikestore.paging.dao.AuthInterceptor
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,6 +27,7 @@ interface RestApi {
 
             val client = OkHttpClient.Builder()
                 .addInterceptor(logger)
+                .addInterceptor(AuthInterceptor())
                 .build()
 
             return Retrofit.Builder()
