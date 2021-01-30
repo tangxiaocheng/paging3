@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import app.sram.bikestore.paging.data.Converters
 
 @Database(
-    entities = [Movies.MovieEntity::class, Movies.MovieRemoteKeys::class],
+    entities = [MoviesDb.MovieEntity::class, MoviesDb.MovieRemoteKeys::class],
     version = 2,
     exportSchema = false
 )

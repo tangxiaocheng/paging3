@@ -3,9 +3,9 @@ package app.sram.bikestore.paging
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import app.sram.bikestore.paging.dao.Movies
+import app.sram.bikestore.paging.dao.MoviesDb
 
-class MoviesRxAdapter : PagingDataAdapter<Movies.MovieEntity, MovieGridViewHolder>(
+class MoviesRxAdapter : PagingDataAdapter<MoviesDb.MovieEntity, MovieGridViewHolder>(
     COMPARATOR
 ) {
 
@@ -20,12 +20,12 @@ class MoviesRxAdapter : PagingDataAdapter<Movies.MovieEntity, MovieGridViewHolde
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<Movies.MovieEntity>() {
-            override fun areItemsTheSame(oldItem: Movies.MovieEntity, newItem: Movies.MovieEntity): Boolean {
+        private val COMPARATOR = object : DiffUtil.ItemCallback<MoviesDb.MovieEntity>() {
+            override fun areItemsTheSame(oldItem: MoviesDb.MovieEntity, newItem: MoviesDb.MovieEntity): Boolean {
                 return oldItem.movieId == newItem.movieId
             }
 
-            override fun areContentsTheSame(oldItem: Movies.MovieEntity, newItem: Movies.MovieEntity): Boolean {
+            override fun areContentsTheSame(oldItem: MoviesDb.MovieEntity, newItem: MoviesDb.MovieEntity): Boolean {
                 return oldItem == newItem
             }
         }

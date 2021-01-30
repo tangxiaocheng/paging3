@@ -7,7 +7,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import app.sram.bikestore.paging.core.AppRxRemoteMediator
 import app.sram.bikestore.paging.dao.BikeStoresDao
-import app.sram.bikestore.paging.dao.Movies
+import app.sram.bikestore.paging.dao.MoviesDb
 import dagger.Module
 import dagger.Provides
 import okhttp3.HttpUrl
@@ -50,7 +50,7 @@ class AppConfigModule {
         config: PagingConfig,
         remoteMediatorApp: AppRxRemoteMediator,
         moviesRxDao: BikeStoresDao
-    ): Pager<Int, Movies.MovieEntity> {
+    ): Pager<Int, MoviesDb.MovieEntity> {
         return Pager(
             config = config,
             remoteMediator = remoteMediatorApp,

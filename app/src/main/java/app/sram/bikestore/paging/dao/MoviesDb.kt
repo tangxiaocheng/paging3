@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
 import java.util.*
 
 @Parcelize
-data class Movies(
+data class MoviesDb(
     val total: Int = 0,
     val page: Int = 0,
     val movieEntities: List<MovieEntity>
