@@ -1,15 +1,19 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.core
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
+import app.sram.bikestore.paging.dao.Movies
+import app.sram.bikestore.paging.data.MoviesMapper
+import app.sram.bikestore.paging.api.RestApi
+import app.sram.bikestore.paging.dao.AppDatabase
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
 
 @OptIn(ExperimentalPagingApi::class)
-class GetMoviesRxRemoteMediator(
+class RxRemoteMediator(
     private val service: RestApi,
     private val database: AppDatabase,
     private val mapper: MoviesMapper
@@ -25,7 +29,6 @@ class GetMoviesRxRemoteMediator(
                 when (it) {
                     LoadType.REFRESH -> {
                         val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
-
                         remoteKeys?.nextKey?.minus(1) ?: 1
                     }
                     LoadType.PREPEND -> {

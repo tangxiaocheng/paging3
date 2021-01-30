@@ -3,6 +3,7 @@ package app.sram.bikestore.paging
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
+import app.sram.bikestore.paging.dao.Movies
 
 class MoviesRxAdapter : PagingDataAdapter<Movies.Movie, MovieGridViewHolder>(
     COMPARATOR

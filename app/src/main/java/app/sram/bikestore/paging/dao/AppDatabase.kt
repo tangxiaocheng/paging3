@@ -1,12 +1,11 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.dao
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.sram.bikestore.paging.dao.BikeStoresDao
-import app.sram.bikestore.paging.dao.RemoteKeysDao
+import app.sram.bikestore.paging.data.Converters
 
 @Database(
     entities = [Movies.Movie::class, Movies.MovieRemoteKeys::class],

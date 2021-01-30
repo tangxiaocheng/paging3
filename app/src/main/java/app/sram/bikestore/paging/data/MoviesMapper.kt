@@ -1,4 +1,6 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.data
+
+import app.sram.bikestore.paging.dao.Movies
 
 class MoviesMapper {
 

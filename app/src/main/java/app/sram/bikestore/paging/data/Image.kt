@@ -1,4 +1,4 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.data
 
 import android.net.Uri
 import android.os.Parcelable

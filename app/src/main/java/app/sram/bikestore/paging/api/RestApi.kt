@@ -1,5 +1,6 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.api
 
+import app.sram.bikestore.paging.data.MoviesResponse
 import app.sram.bikestore.paging.dao.AuthInterceptor
 import io.reactivex.Single
 import okhttp3.OkHttpClient

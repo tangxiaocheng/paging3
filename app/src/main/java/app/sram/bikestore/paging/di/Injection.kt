@@ -1,30 +1,31 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.di
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider
-import java.util.*
+import app.sram.bikestore.paging.api.RestApi
+import app.sram.bikestore.paging.core.GetDataRepoImpl
+import app.sram.bikestore.paging.core.GetMoviesRxViewModelFactory
+import app.sram.bikestore.paging.core.RxRemoteMediator
+import app.sram.bikestore.paging.dao.AppDatabase
+import app.sram.bikestore.paging.data.MoviesMapper
 
 object Injection {
-    private fun provideLocale(): Locale = Locale.getDefault()
     private fun provideDatabase(context: Context): AppDatabase = AppDatabase.getInstance(context)
-
 
     fun provideRxRemoteViewModel(context: Context): ViewModelProvider.Factory {
         val remoteMediator =
-            GetMoviesRxRemoteMediator(
+            RxRemoteMediator(
                 service = RestApi.create(),
                 database = provideDatabase(context),
                 mapper = MoviesMapper()
             )
 
         val repository =
-            GetMoviesRxRemoteRepositoryImpl(
+            GetDataRepoImpl(
                 database = provideDatabase(context),
                 remoteMediator = remoteMediator
             )
 
-        return GetMoviesRxViewModelFactory(
-            repository
-        )
+        return GetMoviesRxViewModelFactory(repository)
     }
 }

@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
+import app.sram.bikestore.paging.core.GetMoviesRxViewModel
+import app.sram.bikestore.paging.di.Injection
 import com.adrena.commerce.paging3.R
 import com.adrena.commerce.paging3.databinding.FragmentMovieListBinding
 import io.reactivex.disposables.CompositeDisposable

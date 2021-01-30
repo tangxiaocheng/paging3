@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import app.sram.bikestore.paging.Movies
 
 @Dao
 interface RemoteKeysDao {

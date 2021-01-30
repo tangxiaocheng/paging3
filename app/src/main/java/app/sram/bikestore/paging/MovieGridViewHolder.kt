@@ -3,6 +3,7 @@ package app.sram.bikestore.paging
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import app.sram.bikestore.paging.dao.Movies
 import coil.load
 import com.adrena.commerce.paging3.R
 import com.adrena.commerce.paging3.databinding.MovieGridItemBinding

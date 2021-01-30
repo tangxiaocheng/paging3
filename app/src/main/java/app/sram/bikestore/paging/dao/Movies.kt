@@ -1,8 +1,9 @@
-package app.sram.bikestore.paging
+package app.sram.bikestore.paging.dao
 
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import app.sram.bikestore.paging.data.Image
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import java.util.*
