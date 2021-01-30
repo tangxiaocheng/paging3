@@ -7,7 +7,7 @@ import javax.inject.Singleton
 
 @Singleton
 @AppScope
-@Component(modules = [RoomModule::class, AppConfigModule::class])
+@Component(modules = [RoomModule::class, AppConfigModule::class, ApiModule::class])
 interface AppComponent {
     fun inject(activity: PagingActivity)
 
