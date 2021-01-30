@@ -21,7 +21,7 @@ class MovieGridViewHolder(private val binding: MovieGridItemBinding) : RecyclerV
     companion object {
         fun create(parent: ViewGroup): MovieGridViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.movie_grid_item,  parent,false)
+                .inflate(R.layout.movie_grid_item, parent, false)
             val binding = MovieGridItemBinding.bind(view)
             return MovieGridViewHolder(binding)
         }

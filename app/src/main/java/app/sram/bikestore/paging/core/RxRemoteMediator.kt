@@ -4,10 +4,10 @@ import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.rxjava2.RxRemoteMediator
-import app.sram.bikestore.paging.dao.Movies
-import app.sram.bikestore.paging.data.MoviesMapper
 import app.sram.bikestore.paging.api.RestApi
 import app.sram.bikestore.paging.dao.AppDatabase
+import app.sram.bikestore.paging.dao.Movies
+import app.sram.bikestore.paging.data.MoviesMapper
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
@@ -55,10 +55,8 @@ class RxRemoteMediator(
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }
                         .onErrorReturn { MediatorResult.Error(it) }
                 }
-
             }
             .onErrorReturn { MediatorResult.Error(it) }
-
     }
 
     private fun insertToDb(page: Int, loadType: LoadType, data: Movies): Movies {
@@ -78,7 +76,6 @@ class RxRemoteMediator(
             database.movieRemoteKeysRxDao().insertAll(keys)
             database.moviesRxDao().insertAll(data.movies)
             database.setTransactionSuccessful()
-
         } finally {
             database.endTransaction()
         }

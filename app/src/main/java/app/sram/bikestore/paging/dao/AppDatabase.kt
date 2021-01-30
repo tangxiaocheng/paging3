@@ -13,7 +13,7 @@ import app.sram.bikestore.paging.data.Converters
     exportSchema = false
 )
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun moviesRxDao(): BikeStoresDao
     abstract fun movieRemoteKeysRxDao(): RemoteKeysDao
 
@@ -33,8 +33,11 @@ abstract class AppDatabase: RoomDatabase() {
                 }
 
         private fun buildDatabase(context: Context) =
-            Room.databaseBuilder(context.applicationContext,
-                AppDatabase::class.java, "TMDB.db")
+            Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                "TMDB.db"
+            )
                 .build()
     }
 }
