@@ -5,8 +5,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.adrena.commerce.paging3.R
 import com.adrena.commerce.paging3.data.db.MovieDatabase
 import com.adrena.commerce.paging3.data.flow.GetMoviesFlowPagingSource
-import com.adrena.commerce.paging3.data.flow.GetMoviesFlowRemoteMediator
-import com.adrena.commerce.paging3.data.flow.GetMoviesFlowRemoteRepositoryImpl
 import com.adrena.commerce.paging3.data.flow.GetMoviesFlowRepositoryImpl
 import com.adrena.commerce.paging3.data.model.MoviesMapper
 import com.adrena.commerce.paging3.data.rx.GetMoviesRxPagingSource
@@ -33,27 +31,6 @@ object Injection {
         val repository =
             GetMoviesFlowRepositoryImpl(
                 pagingSource = pagingSource
-            )
-
-        return GetMoviesFlowViewModelFactory(
-            repository
-        )
-    }
-
-    fun provideFlowRemoteViewModel(context: Context): ViewModelProvider.Factory {
-        val remoteMediator =
-            GetMoviesFlowRemoteMediator(
-                service = TMDBService.create(),
-                database = provideDatabase(context),
-                apiKey = context.getString(R.string.api_key),
-                mapper = MoviesMapper(),
-                locale = provideLocale()
-            )
-
-        val repository =
-            GetMoviesFlowRemoteRepositoryImpl(
-                database = provideDatabase(context),
-                remoteMediator = remoteMediator
             )
 
         return GetMoviesFlowViewModelFactory(

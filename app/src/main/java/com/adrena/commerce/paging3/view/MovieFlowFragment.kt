@@ -37,7 +37,8 @@ class MovieFlowFragment : Fragment() {
         activity?.title = getString(R.string.kotlin_flow_with_paging_source)
 
         mViewModel = ViewModelProvider(this, Injection.provideFlowViewModel(view.context)).get(
-            GetMoviesFlowViewModel::class.java)
+            GetMoviesFlowViewModel::class.java
+        )
 
         val decoration = DividerItemDecoration(view.context, DividerItemDecoration.VERTICAL)
 

@@ -18,7 +18,7 @@ class GetMoviesFlowViewModel(private val repository: GetMoviesFlowRepository) : 
             .getMovies()
             .map { pagingData -> pagingData.map { UiModel.MovieItem(it) } }
             .map {
-                it.insertSeparators<UiModel.MovieItem, UiModel> { before, after ->
+                it.insertSeparators { before, after ->
                     if (after == null) {
                         return@insertSeparators null
                     }
