@@ -14,9 +14,8 @@ interface RestApi {
 
     @GET("movie/popular")
     fun popularMovieRx(
-        @Query("page") page: Int,
-        @Query("language") language: String
-    ) : Single<MoviesResponse>
+        @Query("page") page: Int
+    ): Single<MoviesResponse>
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"

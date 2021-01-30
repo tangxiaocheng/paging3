@@ -7,14 +7,12 @@ import androidx.paging.rxjava2.RxRemoteMediator
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
-import java.util.*
 
 @OptIn(ExperimentalPagingApi::class)
 class GetMoviesRxRemoteMediator(
     private val service: RestApi,
     private val database: AppDatabase,
-    private val mapper: MoviesMapper,
-    private val locale: Locale
+    private val mapper: MoviesMapper
 ) : RxRemoteMediator<Int, Movies.Movie>() {
 
     override fun loadSingle(
@@ -48,11 +46,8 @@ class GetMoviesRxRemoteMediator(
                 if (page == INVALID_PAGE) {
                     Single.just(MediatorResult.Success(endOfPaginationReached = true))
                 } else {
-                    service.popularMovieRx(
-                        page = page,
-                        language = locale.language
-                    )
-                        .map { mapper.transform(it, locale) }
+                    service.popularMovieRx(page = page)
+                        .map { mapper.transform(it) }
                         .map { insertToDb(page, loadType, it) }
                         .map<MediatorResult> { MediatorResult.Success(endOfPaginationReached = it.endOfPage) }
                         .onErrorReturn { MediatorResult.Error(it) }

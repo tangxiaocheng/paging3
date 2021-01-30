@@ -14,8 +14,7 @@ object Injection {
             GetMoviesRxRemoteMediator(
                 service = RestApi.create(),
                 database = provideDatabase(context),
-                mapper = MoviesMapper(),
-                locale = provideLocale()
+                mapper = MoviesMapper()
             )
 
         val repository =
