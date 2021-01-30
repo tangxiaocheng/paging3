@@ -1,8 +1,11 @@
 package app.sram.bikestore.paging.data
 
 import app.sram.bikestore.paging.dao.Movies
+import app.sram.bikestore.paging.di.AppScope
+import javax.inject.Inject
 
-class MoviesMapper {
+@AppScope
+class MoviesMapper @Inject constructor() {
 
     fun transform(response: MoviesResponse): Movies {
         return with(response) {

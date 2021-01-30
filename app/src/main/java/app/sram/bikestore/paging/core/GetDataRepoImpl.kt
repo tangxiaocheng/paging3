@@ -8,8 +8,9 @@ import androidx.paging.rxjava2.flowable
 import app.sram.bikestore.paging.dao.AppDatabase
 import app.sram.bikestore.paging.dao.Movies
 import io.reactivex.Flowable
+import javax.inject.Inject
 
-class GetDataRepoImpl(
+class GetDataRepoImpl @Inject constructor(
     private val database: AppDatabase,
     private val remoteMediator: RxRemoteMediator
 ) : GetDataRepo {

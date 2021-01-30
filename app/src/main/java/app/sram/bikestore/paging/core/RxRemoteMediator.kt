@@ -11,9 +11,10 @@ import app.sram.bikestore.paging.data.MoviesMapper
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.io.InvalidObjectException
+import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class RxRemoteMediator(
+class RxRemoteMediator @Inject constructor(
     private val service: RestApi,
     private val database: AppDatabase,
     private val mapper: MoviesMapper

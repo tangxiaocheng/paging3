@@ -1,9 +1,6 @@
 package app.sram.bikestore.paging.di
 
-import android.content.Context
-import androidx.room.Room
 import app.sram.bikestore.paging.api.RestApi
-import app.sram.bikestore.paging.dao.AppDatabase
 import app.sram.bikestore.paging.dao.AuthInterceptor
 import com.adrena.commerce.paging3.BuildConfig
 import dagger.Module
@@ -36,5 +33,4 @@ class ApiModule {
             .build()
             .create(RestApi::class.java)
     }
-
 }

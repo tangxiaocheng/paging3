@@ -11,15 +11,23 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import app.sram.bikestore.paging.core.GetMoviesRxViewModel
-import app.sram.bikestore.paging.di.Injection
 import com.adrena.commerce.paging3.R
 import com.adrena.commerce.paging3.databinding.FragmentMovieListBinding
 import io.reactivex.disposables.CompositeDisposable
+import javax.inject.Inject
 
 class MovieRxRemoteFragment : Fragment() {
     private val disposable = CompositeDisposable()
     private lateinit var binding: FragmentMovieListBinding
     private lateinit var rvAdapter: MoviesRxAdapter
+
+    @Inject
+    lateinit var provideRxRemoteViewModel: ViewModelProvider.Factory
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        (activity?.application as App).appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,9 +37,8 @@ class MovieRxRemoteFragment : Fragment() {
         binding = FragmentMovieListBinding.inflate(inflater, container, false)
 
         val view = binding.root
-
         val viewModel =
-            ViewModelProvider(this, Injection.provideRxRemoteViewModel(view.context)).get(
+            ViewModelProvider(this, provideRxRemoteViewModel).get(
                 GetMoviesRxViewModel::class.java
             )
 
