@@ -5,13 +5,13 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.rxjava2.flowable
-import app.sram.bikestore.paging.dao.AppDatabase
+import app.sram.bikestore.paging.dao.BikeStoresDao
 import app.sram.bikestore.paging.dao.Movies
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class GetDataRepoImpl @Inject constructor(
-    private val database: AppDatabase,
+    private val moviesRxDao: BikeStoresDao,
     private val remoteMediator: RxRemoteMediator
 ) : GetDataRepo {
 
@@ -27,7 +27,9 @@ class GetDataRepoImpl @Inject constructor(
         return Pager(
             config = config,
             remoteMediator = remoteMediator,
-            pagingSourceFactory = { database.moviesRxDao().selectAll() }
+            pagingSourceFactory = {
+                moviesRxDao.selectAll()
+            }
         ).flowable
     }
 }
