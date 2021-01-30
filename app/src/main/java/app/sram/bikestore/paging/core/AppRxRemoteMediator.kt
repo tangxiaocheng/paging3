@@ -16,7 +16,7 @@ import java.io.InvalidObjectException
 import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
-class RxRemoteMediator @Inject constructor(
+class AppRxRemoteMediator @Inject constructor(
     private val restApi: RestApi,
     private val database: AppDatabase,
     private val mapper: MoviesMapper,
@@ -29,7 +29,7 @@ class RxRemoteMediator @Inject constructor(
             .map {
                 when (it) {
                     LoadType.REFRESH -> {
-                        val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                        val remoteKeys: Movies.MovieRemoteKeys? = getRemoteKeyClosestToCurrentPosition(state)
                         remoteKeys?.nextKey?.minus(1) ?: 1
                     }
                     LoadType.PREPEND -> {

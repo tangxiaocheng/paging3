@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import app.sram.bikestore.paging.core.RxRemoteMediator
+import app.sram.bikestore.paging.core.AppRxRemoteMediator
 import app.sram.bikestore.paging.dao.BikeStoresDao
 import app.sram.bikestore.paging.dao.Movies
 import dagger.Module
@@ -48,12 +48,12 @@ class AppConfigModule {
     @Provides
     fun providePager(
         config: PagingConfig,
-        remoteMediator: RxRemoteMediator,
+        remoteMediatorApp: AppRxRemoteMediator,
         moviesRxDao: BikeStoresDao
     ): Pager<Int, Movies.Movie> {
         return Pager(
             config = config,
-            remoteMediator = remoteMediator,
+            remoteMediator = remoteMediatorApp,
             pagingSourceFactory = {
                 moviesRxDao.selectAll()
             }
