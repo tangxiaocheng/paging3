@@ -68,7 +68,6 @@ class GetMoviesRxRemoteMediator(
 
     }
 
-    @Suppress("DEPRECATION")
     private fun insertToDb(page: Int, loadType: LoadType, data: Movies): Movies {
         database.beginTransaction()
 

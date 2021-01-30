@@ -27,7 +27,7 @@ class MovieRxRemoteFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         mBinding = FragmentMovieListBinding.inflate(inflater, container, false)
 
         val view = mBinding.root
