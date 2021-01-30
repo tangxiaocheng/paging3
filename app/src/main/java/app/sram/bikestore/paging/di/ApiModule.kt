@@ -21,11 +21,11 @@ class ApiModule {
     fun provideRestApi(authInterceptor: AuthInterceptor): RestApi {
 
         val logger = HttpLoggingInterceptor()
-        logger.level = HttpLoggingInterceptor.Level.BASIC
+        logger.level = HttpLoggingInterceptor.Level.BODY
 
         val client = OkHttpClient.Builder()
-            .addInterceptor(logger)
             .addInterceptor(authInterceptor)
+            .addInterceptor(logger)
             .build()
         val create: Gson = GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
