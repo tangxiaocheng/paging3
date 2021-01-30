@@ -3,6 +3,9 @@ package app.sram.bikestore.paging.di
 import app.sram.bikestore.paging.api.RestApi
 import app.sram.bikestore.paging.dao.AuthInterceptor
 import com.adrena.commerce.paging3.BuildConfig
+import com.google.gson.FieldNamingPolicy
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -24,11 +27,13 @@ class ApiModule {
             .addInterceptor(logger)
             .addInterceptor(authInterceptor)
             .build()
-
+        val create: Gson = GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .create()
         return Retrofit.Builder()
             .baseUrl(BuildConfig.SERVER_URL)
             .client(client)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(create))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(RestApi::class.java)
