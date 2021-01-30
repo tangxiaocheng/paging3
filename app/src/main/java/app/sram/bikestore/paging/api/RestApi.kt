@@ -2,6 +2,7 @@ package app.sram.bikestore.paging.api
 
 import app.sram.bikestore.paging.dao.AuthInterceptor
 import app.sram.bikestore.paging.data.MoviesResponse
+import com.adrena.commerce.paging3.BuildConfig
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -19,7 +20,6 @@ interface RestApi {
     ): Single<MoviesResponse>
 
     companion object {
-        private const val BASE_URL = "https://api.themoviedb.org/3/"
 
         fun create(): RestApi {
             val logger = HttpLoggingInterceptor()
@@ -31,7 +31,7 @@ interface RestApi {
                 .build()
 
             return Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(BuildConfig.SERVER_URL)
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

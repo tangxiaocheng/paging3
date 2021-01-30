@@ -1,5 +1,6 @@
 plugins {
     id 'org.jlleitschuh.gradle.ktlint'
+    id('scabbard.gradle') version '0.4.0'
 }
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -15,8 +16,10 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'SERVER_URL', '"https://api.themoviedb.org/3/"'
+        buildConfigField 'String', 'KEY_STRING', '"api_key"'
+        buildConfigField 'String', 'MOVIE_KEY', '"21440930b1350cd8b4d28accce3a4799"'
     }
 
     buildTypes {
@@ -40,6 +43,15 @@ android {
         viewBinding true
     }
 }
+
+scabbard {
+    enabled true
+    failOnError true
+    fullBindingGraphValidation true
+    qualifiedNames false
+    outputFormat 'png'
+}
+
 
 dependencies {
     def paging_version = '3.0.0-alpha13'
@@ -85,4 +97,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+
+    def daggerVersion = '2.30.1'
+    implementation "com.google.dagger:dagger:$daggerVersion"
+    kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 }

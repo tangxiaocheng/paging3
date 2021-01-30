@@ -7,8 +7,9 @@ import androidx.paging.filter
 import androidx.paging.rxjava2.cachedIn
 import app.sram.bikestore.paging.dao.Movies
 import io.reactivex.Flowable
+import javax.inject.Inject
 
-class GetMoviesRxViewModel(private val repository: GetDataRepo) : ViewModel() {
+class GetMoviesRxViewModel @Inject constructor(private val repository: GetDataRepo) : ViewModel() {
     fun getFavoriteMovies(): Flowable<PagingData<Movies.Movie>> {
         return repository
             .getPagingDataList()
