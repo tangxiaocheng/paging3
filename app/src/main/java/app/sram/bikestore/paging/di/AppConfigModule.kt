@@ -50,7 +50,7 @@ class AppConfigModule {
         config: PagingConfig,
         remoteMediatorApp: AppRxRemoteMediator,
         moviesRxDao: BikeStoresDao
-    ): Pager<Int, Movies.Movie> {
+    ): Pager<Int, Movies.MovieEntity> {
         return Pager(
             config = config,
             remoteMediator = remoteMediatorApp,

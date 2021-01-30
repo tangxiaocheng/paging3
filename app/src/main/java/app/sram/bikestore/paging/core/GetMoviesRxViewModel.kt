@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class GetMoviesRxViewModel @Inject constructor(private val repository: GetDataRepo) : ViewModel() {
-    fun getFavoriteMovies(): Flowable<PagingData<Movies.Movie>> {
+    fun getFavoriteMovies(): Flowable<PagingData<Movies.MovieEntity>> {
         return repository
             .getPagingDataList()
             .map { pagingData -> pagingData.filter { it.poster != null } }

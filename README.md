@@ -2,7 +2,7 @@
 # paging3
 Implementation of Paging3 using Kotlin Flow and RxJava
 
-Consists of 4 parts for loading movies from TMDB:
+Consists of 4 parts for loading movieEntities from TMDB:
 
 Tab 1: With Kotlin Flow using PagingSource\
 Tab 2: With Kotlin Flow using RemoteMediator\

@@ -5,5 +5,5 @@ import app.sram.bikestore.paging.dao.Movies
 import io.reactivex.Flowable
 
 interface GetDataRepo {
-    fun getPagingDataList(): Flowable<PagingData<Movies.Movie>>
+    fun getPagingDataList(): Flowable<PagingData<Movies.MovieEntity>>
 }

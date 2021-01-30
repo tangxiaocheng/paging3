@@ -10,8 +10,8 @@ import com.adrena.commerce.paging3.databinding.MovieGridItemBinding
 
 class MovieGridViewHolder(private val binding: MovieGridItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(movie: Movies.Movie) {
-        with(movie) {
+    fun bind(movieEntity: Movies.MovieEntity) {
+        with(movieEntity) {
             binding.poster.load(poster?.medium) {
                 crossfade(true)
             }

@@ -9,11 +9,11 @@ import io.reactivex.Flowable
 import javax.inject.Inject
 
 class GetDataRepoImpl @Inject constructor(
-    private val pager: Pager<Int, Movies.Movie>
+    private val pager: Pager<Int, Movies.MovieEntity>
 ) : GetDataRepo {
 
     @OptIn(ExperimentalPagingApi::class)
-    override fun getPagingDataList(): Flowable<PagingData<Movies.Movie>> {
+    override fun getPagingDataList(): Flowable<PagingData<Movies.MovieEntity>> {
         return pager.flowable
     }
 }

@@ -10,11 +10,11 @@ import androidx.room.Query
 interface BikeStoresDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(movies: List<Movies.Movie>)
+    fun insertAll(movieEntities: List<Movies.MovieEntity>)
 
-    @Query("SELECT * FROM movies ORDER BY id ASC")
-    fun selectAll(): PagingSource<Int, Movies.Movie>
+    @Query("SELECT * FROM movieEntities ORDER BY id ASC")
+    fun selectAll(): PagingSource<Int, Movies.MovieEntity>
 
-    @Query("DELETE FROM movies")
+    @Query("DELETE FROM movieEntities")
     fun clearAll()
 }

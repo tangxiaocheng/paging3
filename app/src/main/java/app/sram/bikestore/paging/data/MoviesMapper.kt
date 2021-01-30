@@ -12,8 +12,8 @@ class MoviesMapper @Inject constructor() {
             Movies(
                 total = total,
                 page = page,
-                movies = results.map {
-                    Movies.Movie(
+                movieEntities = results.map {
+                    Movies.MovieEntity(
                         0,
                         it.id,
                         it.popularity,

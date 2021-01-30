@@ -12,15 +12,15 @@ import java.util.*
 data class Movies(
     val total: Int = 0,
     val page: Int = 0,
-    val movies: List<Movie>
+    val movieEntities: List<MovieEntity>
 ) : Parcelable {
 
     @IgnoredOnParcel
     val endOfPage = total == page
 
     @Parcelize
-    @Entity(tableName = "movies")
-    data class Movie(
+    @Entity(tableName = "movieEntities")
+    data class MovieEntity(
         @PrimaryKey(autoGenerate = true) val id: Long = 0,
         val movieId: Long,
         val popularity: Double,
