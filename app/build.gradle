@@ -6,6 +6,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
+
+static def getMyApiKey(String property){
+    Properties properties = new Properties()
+    properties.load(new FileInputStream("./.projectConf"))
+    return "\"" + properties.getProperty(property) +"\""
+}
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -20,7 +27,7 @@ android {
         buildConfigField 'String', 'SERVER_URL', '"https://maps.googleapis.com/"'
         buildConfigField 'String', 'KEY_STRING', '"key"'
         //For the record, the exposed key has been removed from google console.
-        buildConfigField 'String', 'MOVIE_KEY', '"***"'
+        buildConfigField 'String', 'API_KEY', getMyApiKey("myApiKey")
     }
 
     buildTypes {

@@ -17,6 +17,6 @@ data class Image(val photoReference: String) : Parcelable {
         Uri.parse(
             "${PATH}maps/api/place/photo?maxheight=200" +
                 "&photoreference=$photoReference" +
-                "&${BuildConfig.KEY_STRING}=${BuildConfig.MOVIE_KEY}"
+                "&${BuildConfig.KEY_STRING}=${BuildConfig.API_KEY}"
         )
 }

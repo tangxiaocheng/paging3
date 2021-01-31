@@ -12,7 +12,7 @@ class AuthInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val url = chain.request().url.newBuilder()
-            .addQueryParameter(BuildConfig.KEY_STRING, BuildConfig.MOVIE_KEY)
+            .addQueryParameter(BuildConfig.KEY_STRING, BuildConfig.API_KEY)
             .addQueryParameter("language", Locale.getDefault().language)
             .build()
 
